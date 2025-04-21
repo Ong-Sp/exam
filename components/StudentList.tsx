@@ -2,11 +2,14 @@ import prisma from "../utils/db";
 import StudentCard from "./StudentCard";
 
 export default async function StudentList({ query }: { query: string }) {
+  // ✅ Mock delay 1 วินาทีเพื่อให้เห็น loading
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   const students = await prisma.student.findMany({
     where: {
       OR: [
-        { name: { contains: query } },
-        { department: { contains: query } },
+        { name: { contains: query.toLowerCase() } },
+        { department: { contains: query.toLowerCase() } },
       ],
     },
     orderBy: { id: "desc" },

@@ -1,8 +1,8 @@
 import seedStudents from "./_actions/seed-students";
 import dropAllStudents from "./_actions/drop-all-students";
+import { Suspense } from "react";
 import Header from "../../components/Header";
 import StudentList from "../../components/StudentList";
-import { Suspense } from "react";
 
 interface Props {
   searchParams: {
@@ -70,15 +70,21 @@ export default function HomePage({ searchParams }: Props) {
           </a>
         </div>
 
-        {/* ✅ Student Grid with Loading State */}
-        <Suspense fallback={<p className="text-gray-500 animate-pulse">Loading students...</p>}>
+        {/* ✅ Student List with loading spinner */}
+        <Suspense
+          fallback={
+            <div className="flex justify-center py-8">
+              <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+            </div>
+          }
+        >
           <StudentList query={query} />
         </Suspense>
       </main>
 
       {/* ✅ Footer */}
       <footer className="mt-12 pt-6 border-t text-center text-sm text-gray-500">
-        &copy; {new Date().getFullYear()} Student Management System — Created by Ongsa
+        &copy; {new Date().getFullYear()} Student Management System — Created by You
       </footer>
     </div>
   );
